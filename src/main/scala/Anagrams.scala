@@ -1,3 +1,4 @@
+import scala.collection.immutable.Stream.Empty
 import scala.collection.immutable._
 
 
@@ -60,8 +61,8 @@ object Anagrams extends App {
   def wordAnagrams(word: Word): List[Word] = matchingWords(fingerPrint(word))
 
   // Test code with for example:
-  // println(wordAnagrams("eta"))
-  // println(wordAnagrams("jbdikb"))
+  println(wordAnagrams("eta"))
+  println(wordAnagrams("jbdikb"))
 
 
   /** Returns the list of all subsequences of a fingerprint.
@@ -77,11 +78,11 @@ object Anagrams extends App {
    *  in the example above could have been displayed in some other order.
    */
 
-  def subseqs(fp: FingerPrint): List[FingerPrint] = ???
+  def subseqs(fp: FingerPrint): List[FingerPrint] = (for { i <- 0 to fp.length; c <- fp.combinations(i) } yield c).toList.distinct
 
 
   // Test code with for example:
-  // println(subseqs("aabbc"))
+  println(subseqs("aabbc"))
 
 
   /** Subtracts fingerprint `y` from fingerprint `x`.
@@ -91,10 +92,10 @@ object Anagrams extends App {
    *  appear in `x`.
    */
 
-  def subtract(x: FingerPrint, y: FingerPrint): FingerPrint = ???
+  def subtract(x: FingerPrint, y: FingerPrint): FingerPrint = x diff y
 
   // Test code with for example:
-  // println(subtract("aabbcc", "abc"))
+  println(subtract("aabbcc", "abc"))
 
 
   /** Returns a list of all anagram sentences of the given sentence.
@@ -116,11 +117,15 @@ object Anagrams extends App {
    *  Note: There is only one anagram of an empty sentence.
    */
 
-  def sentenceAnagrams(sentence: Sentence): List[Sentence] = ???
+  def sentenceAnagrams(sentence: Sentence): List[Sentence] = sentence match {
+    case  nil => List()
+    case _ => for( w <- subseqs(fingerPrint(sentence))) yield w::sentence
+  }
+
 
   // Test code with for example:
-  // println(sentenceAnagrams(List("eat", "tea")))
-  // println(sentenceAnagrams(List("you", "olive")))
-  // println(sentenceAnagrams(List("I", "love", "you")))
+  //println(sentenceAnagrams(List("eat", "tea")))
+  //println(sentenceAnagrams(List("you", "olive")))
+  //println(sentenceAnagrams(List("I", "love", "you")))
 
 }
