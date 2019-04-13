@@ -82,7 +82,7 @@ object Anagrams extends App {
 
 
   // Test code with for example:
-  println(subseqs("aabbc"))
+  println(subseqs("abbc"))
 
 
   /** Subtracts fingerprint `y` from fingerprint `x`.
@@ -118,14 +118,16 @@ object Anagrams extends App {
    */
 
   def sentenceAnagrams(sentence: Sentence): List[Sentence] = sentence match {
-    case  nil => List()
+    case  null => List()
     case _ => for( w <- subseqs(fingerPrint(sentence))) yield w::sentence
   }
 
 
   // Test code with for example:
-  //println(sentenceAnagrams(List("eat", "tea")))
+  println(sentenceAnagrams(List("eat", "tea")))
   //println(sentenceAnagrams(List("you", "olive")))
   //println(sentenceAnagrams(List("I", "love", "you")))
+
+  println(fingerPrint("You olive"))
 
 }
