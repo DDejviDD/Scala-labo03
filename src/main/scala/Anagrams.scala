@@ -118,7 +118,7 @@ object Anagrams extends App {
    */
 
   def sentenceAnagrams(sentence: Sentence): List[Sentence] = sentence match {
-    case  null => List()
+    case  Nil => List()
     case _ => for( w <- subseqs(fingerPrint(sentence))) yield w::sentence
   }
 
