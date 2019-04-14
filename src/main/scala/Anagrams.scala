@@ -49,7 +49,7 @@ object Anagrams extends App {
      */
 
    def fingerPrint(s: Word): FingerPrint = s.sorted
-   def fingerPrint(s: Sentence): FingerPrint = s.mkString("").toLowerCase().sorted
+   def fingerPrint(s: Sentence): FingerPrint = s.mkString("").sorted
 
 
    /** `matchingWords` is a `Map` from fingerprints to a sequence of all
@@ -152,8 +152,8 @@ object Anagrams extends App {
    }
 
    // Test code with for example:
-   //println(sentenceAnagrams(List("eat", "tea")))
+   println(sentenceAnagrams(List("eat", "tea")))
    println(sentenceAnagrams(List("you", "olive")))
-   //println(sentenceAnagrams(List("I", "love", "you")))
+   println(sentenceAnagrams(List("I", "love", "you")))
 
 }
