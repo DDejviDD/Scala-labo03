@@ -125,7 +125,7 @@ object Anagrams extends App {
          else for {
             ss <- subseqs(fp)
             words <- wordAnagrams(ss)
-            results <- processAnagrams(subtract(ss, words))
+            results <- processAnagrams(subtract(fp, words))
          } yield words :: results
       }
       sentence match {
