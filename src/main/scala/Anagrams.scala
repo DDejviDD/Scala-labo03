@@ -1,4 +1,3 @@
-import scala.collection.immutable.Stream.Empty
 import scala.collection.immutable._
 
 
@@ -118,32 +117,27 @@ object Anagrams extends App {
      */
 
    def sentenceAnagrams(sentence: Sentence): List[Sentence] = {
-      /*sentence match {
-        case  Nil => List()
-        case _ => for{
-          w <- subseqs(fingerPrint(sentence)).withFilter(f => matchingWords(f).contains(f))
-        } yield w::sentence
-      }*/
 
-      def iter(fingerPrints: List[FingerPrint]): List[Sentence] = {
-         if (fingerPrints.isEmpty) List(List())
+      def processAnagrams(fp: FingerPrint): List[Sentence] = {
+         if (fp == "") {
+            List()
+         }
          else for {
-            word <- matchingWords(fingerPrints)
-            if word.nonEmpty
-               anag <- wordAnagrams(word)
-            sentence <- iter(subtract(fingerPrints, anag))
-         } yield word :: sentence
+            ss <- subseqs(fp)
+            words <- wordAnagrams(ss)
+            results <- processAnagrams(subtract(fp, words))
+         } yield words :: results
       }
-      iter(subseqs(fingerPrint(sentence)))
-
-
-      // Test code with for example:
-      //println(sentenceAnagrams(List("eat", "tea")))
-      println(sentenceAnagrams(List("you", "olive")))
-      //println(sentenceAnagrams(List("I", "love", "you")))
-
-      //println(fingerPrint("You olive"))
+      sentence match {
+         case  Nil => List()
+         case _ => processAnagrams(fingerPrint(sentence))
+      }
 
    }
 
+   // Test code with for example:
+   println(sentenceAnagrams(List("eat", "tea")))
+   println(sentenceAnagrams(List("you", "olive")))
+   println(sentenceAnagrams(List("I", "love", "you")))
+   println(fingerPrint("You olive"))
 }
