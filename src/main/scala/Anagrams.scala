@@ -1,4 +1,6 @@
+
 import scala.collection.immutable._
+import scala.io.Source
 
 
 object Anagrams extends App {
@@ -27,9 +29,16 @@ object Anagrams extends App {
      *  that you can load to use with your program
      */
 
-   val dictionary: List[Word] =
+   val dictionaryTemp: List[Word] = loadDictionaryFile()
       List("ate", "eat", "tea", "pot", "top", "sonja", "jason", "normal",
          "I", "love", "you", "olive", "i")
+
+   def loadDictionaryFile():List[Word] = {
+      // Ouverture du fichier linuxwords.txt permettant de remplir le dictionnaire.
+      Source.fromFile("linuxwords.txt").getLines.toList
+   }
+
+   val dictionary = loadDictionaryFile()
 
 
    /** Converts a word/sentence into its fingerprint.
@@ -118,26 +127,31 @@ object Anagrams extends App {
 
    def sentenceAnagrams(sentence: Sentence): List[Sentence] = {
 
+      // Fonction récursive prenant en paramètre l'empreinte de la phrase dont nous souhaitons récupérer les anagramms
       def processAnagrams(fp: FingerPrint): List[Sentence] = {
+         // Si c'est une phrase vide, on retourne directement le résultat
          if (fp == "") {
             List(List())
          }
          else for {
+            // Sinon on récupére la séquence de toutes les sous-séquences de l'empreinte fournie
             ss <- subseqs(fp)
+            // on récupére tous les anagrammes correspondant à ces sous-séquences
             words <- wordAnagrams(ss)
+            // et enfin on filtre pour ne récupérer que les anagrammes dont les mots appartiennent au dictionnaire
+            // et ce de manière récursive sur l'ensemble de la phrase
             results <- processAnagrams(subtract(fp, words))
          } yield words :: results
       }
       sentence match {
-         case Nil => List()
+         case Nil => List(List())
          case _ => processAnagrams(fingerPrint(sentence))
       }
-
    }
 
    // Test code with for example:
    println(sentenceAnagrams(List("eat", "tea")))
    println(sentenceAnagrams(List("you", "olive")))
    println(sentenceAnagrams(List("I", "love", "you")))
-   println(fingerPrint("You olive"))
+
 }
