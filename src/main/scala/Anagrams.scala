@@ -29,13 +29,15 @@ object Anagrams extends App {
      *  that you can load to use with your program
      */
 
-   val dictionaryTemp: List[Word] = loadDictionaryFile()
-      List("ate", "eat", "tea", "pot", "top", "sonja", "jason", "normal",
+   val dictionaryTemp: List[Word] = List("ate", "eat", "tea", "pot", "top", "sonja", "jason", "normal",
          "I", "love", "you", "olive", "i")
 
    def loadDictionaryFile():List[Word] = {
       // Ouverture du fichier linuxwords.txt permettant de remplir le dictionnaire.
-      Source.fromFile("linuxwords.txt").getLines.toList
+      val source =  Source.fromFile("linuxwords.txt")
+      val sourceList = source.getLines().toList
+      source.close()
+      sourceList
    }
 
    val dictionary = loadDictionaryFile()
