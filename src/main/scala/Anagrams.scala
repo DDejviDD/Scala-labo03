@@ -34,7 +34,7 @@ object Anagrams extends App {
 
    def loadDictionaryFile():List[Word] = {
       // Ouverture du fichier linuxwords.txt permettant de remplir le dictionnaire.
-      val source =  Source.fromFile("linuxwords.txt")
+      val source =  Source.fromFile("src/main/scala/linuxwords.txt")
       val sourceList = source.getLines().toList
       source.close()
       sourceList
@@ -152,8 +152,8 @@ object Anagrams extends App {
    }
 
    // Test code with for example:
-   println(sentenceAnagrams(List("eat", "tea")))
+   //println(sentenceAnagrams(List("eat", "tea")))
    println(sentenceAnagrams(List("you", "olive")))
-   println(sentenceAnagrams(List("I", "love", "you")))
+   //println(sentenceAnagrams(List("I", "love", "you")))
 
 }
