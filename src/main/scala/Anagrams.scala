@@ -120,16 +120,16 @@ object Anagrams extends App {
 
       def processAnagrams(fp: FingerPrint): List[Sentence] = {
          if (fp == "") {
-            List()
+            List(List())
          }
          else for {
             ss <- subseqs(fp)
             words <- wordAnagrams(ss)
-            results <- processAnagrams(subtract(fp, words))
+            results <- processAnagrams(subtract(ss, words))
          } yield words :: results
       }
       sentence match {
-         case  Nil => List()
+         case Nil => List()
          case _ => processAnagrams(fingerPrint(sentence))
       }
 
